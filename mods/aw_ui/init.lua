@@ -37,13 +37,13 @@ local HAS = {
 }
 
 -- 9-slice border thickness in **texture pixels**
-local PANEL_BORDER = tonumber(minetest.settings:get("aw_ui_panel_border_px")) or 16
+local PANEL_BORDER = 16
 -- Slot 9-slice middle rect (x,y,w,h in pixels) if you use a framed slot image.
 -- Tweak to match your artwork; defaults are sane for a 24–32 px slot frame.
-local SLOT_MID_X = tonumber(minetest.settings:get("aw_ui_slot_mid_x")) or 8
-local SLOT_MID_Y = tonumber(minetest.settings:get("aw_ui_slot_mid_y")) or 8
-local SLOT_MID_W = tonumber(minetest.settings:get("aw_ui_slot_mid_w")) or 16
-local SLOT_MID_H = tonumber(minetest.settings:get("aw_ui_slot_mid_h")) or 16
+local SLOT_MID_X = 8
+local SLOT_MID_Y = 8
+local SLOT_MID_W = 16
+local SLOT_MID_H = 16
 
 -- helper: 9-slice panel or color box fallback (draw order safe)
 local function panel_bg(x, y, w, h, which, color_hex)
