@@ -8,8 +8,10 @@ core.register_item(":",{
         full_punch_interval = 1.0,
         max_drop_level = 3,
         groupcaps = {
-            harvestable_hand = {times={[0]=6.0,[1]=4.0,[2]=2.0,[3]=0.0}, uses=0, maxlevel=1}
+            harvestable_hand = {times={[1]=0.0,[2]=0.6,[3]=1.5}, uses=0, maxlevel=3}
         },
         damage_groups = {},
     },
 })
+
+--guis

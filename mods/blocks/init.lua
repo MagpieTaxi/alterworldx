@@ -35,6 +35,16 @@ core.register_node("blocks:grass",{
         type = "fixed",
         fixed = {-0.3, -0.5, -0.3, 0.3, 0.3, 0.3}
     },
+
+	drop = {
+		max_items = 1,
+		items = {
+			{
+				rarity = 3,
+				items = {"items:plant_fiber"}
+			}
+		}
+	}
 })
 core.register_node("blocks:pebble",{
 	description = "Pebble",
@@ -73,7 +83,7 @@ core.register_node("blocks:stick",{
 	paramtype = "light",            -- For light propagation if needed
     sunlight_propagates = true,
 	paramtype2 = "facedir",
-    groups = {harvestable_hand = 3},
+    groups = {harvestable_hand = 2},
 	visual_offset = {x=0,y=-1,z=0},
     collision_box = {
 		type = "fixed",
@@ -93,7 +103,8 @@ core.register_node("blocks:stick",{
 
 core.register_node("blocks:stone",{
 	description = "Stone",
-	tiles = {"stone.png"}
+	tiles = {"stone.png"},
+	groups = {harvestable_pickaxe = 1}
 })
 
 core.register_node("blocks:sycamore_log",{
@@ -106,13 +117,11 @@ core.register_node("blocks:sycamore_log",{
 core.register_node("blocks:sycamore_leaves",{
 	description = "Sycamore Leaves",
 	tiles = {"sycamore_leaves.png"},
-	groups = {harvestable_cutters = 1},
-	digtime = 1
+	groups = {harvestable_cutters = 1, harvestable_hand = 2},
 })
 
 core.register_node("blocks:sycamore_branches",{
 	description = "Sycamore Branches",
 	tiles = {"sycamore_leaves_branched.png"},
-	groups = {harvestable_cutters = 1},
-	digtime = 1
+	groups = {harvestable_cutters = 1, harvestable_hand = 2},
 })
