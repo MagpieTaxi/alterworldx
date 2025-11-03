@@ -384,9 +384,12 @@ end
 local function formspec(player)
   local n   = player:get_player_name()
   local inv = player:get_inventory()
-  if inv:get_size("main") < 32 then inv:set_size("main", 32) end
-  inv:set_size("craft", 4)
-  inv:set_size("craftpreview", 1)
+if inv:get_size("main") < 32 then inv:set_size("main", 32) end
+
+inv:set_size("craft", 4) -- 2×2 = 4
+inv:set_width("craft", 2) -- IMPORTANT for shaped 2×2 recipes
+
+inv:set_size("craftpreview", 1)
 
   local fs = { base() }
   if is_creative(n) then
