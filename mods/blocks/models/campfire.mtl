@@ -1,0 +1,6 @@
+# Made in Blockbench 4.12.4
+newmtl m_f2066b54-95d3-040d-5c41-7eb6a7929322
+map_Kd campfire_active_texture.png
+newmtl m_f059b46f-cb2f-849f-d72f-fe42f992f1db
+map_Kd campfire_texture.png
+newmtl none

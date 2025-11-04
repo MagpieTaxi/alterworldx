@@ -1,3 +1,12 @@
+--first init
+AW = {}
+
+--initialize other stuff
+local path = core.get_modpath("core")
+
+dofile(path.."/audio.lua")
+dofile(path.."/crafting.lua")
+
 --hand
 core.register_item(":",{
 	type = "none",
@@ -8,7 +17,7 @@ core.register_item(":",{
         full_punch_interval = 1.0,
         max_drop_level = 3,
         groupcaps = {
-            harvestable_hand = {times={[1]=0.0,[2]=0.6,[3]=1.5}, uses=0, maxlevel=3}
+            harvestable_hand = {times={[1]=0.0,[2]=0.6,[3]=1.5,[4]=2}, uses=0, maxlevel=3}
         },
         damage_groups = {},
     },

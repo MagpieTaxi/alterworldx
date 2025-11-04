@@ -14,6 +14,7 @@ minetest.register_node("blocks:water_source", {
     liquid_viscosity = 1,
     post_effect_color = {a = 80, r = 30, g = 60, b = 255},
     groups = {water = 3, liquid = 3},
+	sounds = AW.Audio.node_sound_water_defaults()
 })
 minetest.register_node("blocks:water_flowing", {
     drawtype = "flowingliquid",
@@ -34,6 +35,7 @@ minetest.register_node("blocks:water_flowing", {
     liquid_viscosity = 1,
     post_effect_color = {a = 80, r = 30, g = 60, b = 255},
     groups = {water = 3, liquid = 3, not_in_creative_inventory = 1},
+	sounds = AW.Audio.node_sound_water_defaults()
 })
 
 --basic blocks
@@ -41,50 +43,71 @@ core.register_node("blocks:dirt", {
 	description = "Dirt",
 	tiles = {"dirt.png"},
 	groups = {harvestable_shovel = 1},
-	digtime = 5
+	digtime = 5,
+	sounds = AW.Audio.node_sound_dirt_defaults()
 })
-
+core.register_node("blocks:coarse_dirt",{
+	description = "Coarse Dirt",
+	tiles = {"coarse_dirt.png"},
+	groups = {harvestable_shovel = 1},
+	digtime = 5,
+	sounds = AW.Audio.node_sound_dirt_defaults(),
+	drop = {
+		max_items = 1,
+		items = {
+			{rarity = 10, items = {"blocks:dirt","blocks:pebble"}},
+			{items = {"blocks:coarse_dirt"}}
+		}
+	}
+})
 core.register_node("blocks:grass_block",{
 	description = "Grass Block",
 	tiles = {"grass_top.png","dirt.png","grass_side.png"},
 	groups = {harvestable_shovel = 1},
-	digtime = 6
+	digtime = 6,
+	sounds = AW.Audio.node_sound_dirt_defaults()
 })
 
 core.register_node("blocks:stone",{
 	description = "Stone",
 	tiles = {"stone.png"},
-	groups = {harvestable_pickaxe = 1}
+	groups = {harvestable_pickaxe = 1},
+	sounds = AW.Audio.node_sound_stone_defaults()
 })
 core.register_node("blocks:sand", {
 	description = "Sand",
 	tiles = {"altersand.png"},
 	groups = {harvestable_shovel = 1},
-	digtime = 2
+	digtime = 2,
+	sounds = AW.Audio.node_sound_sand_defaults()
 })
 core.register_node("blocks:gravel", {
 	description = "Gravel",
 	tiles = {"gravel.png"},
 	groups = {harvestable_shovel = 1},
-	digtime = 2
+	digtime = 2,
+	sounds = AW.Audio.node_sound_gravel_defaults()
 })
 core.register_node("blocks:sycamore_log",{
 	description = "Sycamore Log",
 	tiles = {"sycamore_log_top.png","sycamore_log_top.png","sycamore_log.png"},
 	groups = {harvestable_axe = 1},
-	digtime = 10
+	digtime = 10,
+	sounds = AW.Audio.node_sound_wood_defaults()
 })
 
 core.register_node("blocks:sycamore_leaves",{
 	description = "Sycamore Leaves",
 	tiles = {"sycamore_leaves.png"},
 	groups = {harvestable_cutters = 1, harvestable_hand = 2},
+	sounds = AW.Audio.node_sound_leaves_defaults()
 })
 
 core.register_node("blocks:sycamore_branches",{
 	description = "Sycamore Branches",
 	tiles = {"sycamore_leaves_branched.png"},
 	groups = {harvestable_cutters = 1, harvestable_hand = 2},
+	sounds = AW.Audio.node_sound_leaves_defaults()
 })
 
 ---- Non-solid blocks
@@ -120,7 +143,8 @@ core.register_node("blocks:grass",{
 				items = {"items:plant_fiber"}
 			}
 		}
-	}
+	},
+	sounds = AW.Audio.node_sound_leaves_defaults()
 })
 core.register_node("blocks:rose",{
 		description = "Rose",
@@ -145,6 +169,7 @@ core.register_node("blocks:rose",{
         type = "fixed",
         fixed = {-0.3, -0.5, -0.3, 0.3, 0.3, 0.3}
     },
+	sounds = AW.Audio.node_sound_leaves_defaults()
 })
 core.register_node("blocks:pebble",{
 	description = "Pebble",
@@ -172,6 +197,7 @@ core.register_node("blocks:pebble",{
 		node.param2 = math.random(0,3)  -- 0, 1, 2, or 3 → multiples of 90°
 		minetest.set_node(pos, node)
 	end,
+	sounds = AW.Audio.node_sound_stone_defaults()
 })
 core.register_node("blocks:stick",{
 	description = "Stick",
@@ -199,4 +225,77 @@ core.register_node("blocks:stick",{
 		node.param2 = math.random(0,3)  -- 0, 1, 2, or 3 → multiples of 90°
 		minetest.set_node(pos, node)
 	end,
-co})
+	sounds = AW.Audio.node_sound_wood_defaults()
+})
+--valuables
+core.register_node("blocks:lignite_ore",{
+	description = "Lignite Ore",
+	tiles = {"lignite_ore.png"},
+	groups = {harvestable_pickaxe = 1},
+	drop = {
+		max_items = 3,
+		items = {
+			{rarity = 1, items = {"items:lignite"}},
+			{rarity = 2, items = {"items:lignite"}},
+			{rarity = 2, items = {"items:lignite"}},
+			{rarity = 5, items = {"items:lignite"}},
+		}
+	},
+	sounds = AW.Audio.node_sound_stone_defaults()
+})
+core.register_node("blocks:lignite_block",{
+	description = "Lignite Block",
+	tiles = {"lignite_block.png"},
+	groups = {harvestable_pickaxe = 1},
+	sounds = AW.Audio.node_sound_stone_defaults()
+})
+--stations
+core.register_node("blocks:campfire",{
+	description = "Campfire",
+	drawtype = "mesh",
+	mesh = "campfire.obj",
+	tiles = {"campfire_active_texture.png"},
+	inventory_image = "campfire_item.png",
+    wield_image = "campfire_item.png",
+	use_texture_alpha = "blend",
+	light_source = 14,
+	paramtype = "light",            -- For light propagation if needed
+    sunlight_propagates = true,
+    groups = {harvestable_hand = 4, harvestable_axe = 1},
+	visual_offset = {x=0,y=-1,z=0},
+    collision_box = {
+		type = "fixed",
+		fixed = {-0.5,-0.5,-0.5, 0.5,-0.1,0.5}
+	},  -- Adjust to fit the model
+    selection_box = {
+        type = "fixed",
+        fixed = {-0.5,-0.5,-0.5, 0.5,-0.1,0.5},
+    },
+	drop = {
+		max_items = 3,
+		items = {
+			{rarity=1, items={"items:lignite"}},
+			{rarity=2, items={"items:lignite"}},
+			{rarity=2, items={"blocks:stick"}},
+			{rarity=3, items={"blocks:stick"}},
+			{rarity=4, items={"blocks:sycamore_log"}},
+		}
+	},
+	sounds = AW.Audio.node_sound_wood_defaults()
+})
+core.register_abm({
+	label = "Standing damage tick",
+	nodenames = {"blocks:campfire"},
+	interval = 1,
+	chance = 1,
+	action = function (pos)
+		local objs = minetest.get_objects_inside_radius(pos, 0.5)
+		for _, obj in pairs(objs) do
+			if obj:get_luaentity() or obj:is_player() then
+				if obj:get_hp() and obj:get_hp() > 0 then
+					obj:set_hp(obj:get_hp() - 1)
+				end
+			end
+		end
+	end
+})
