@@ -4,7 +4,7 @@ core.register_craftitem("items:plant_fiber",{
 	wield_image = "plant_fiber.png"
 })
 core.register_craftitem("items:lignite",{
-		description = "Plant Fiber",
+		description = "Lignite",
 	inventory_image = "lignite.png",
 	wield_image = "lignite.png"
 })
