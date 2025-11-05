@@ -30,13 +30,13 @@ local HAS = {
 }
 
 -- 9-slice panel border in pixels of the PNG (adjust to your art)
-local PANEL_BORDER = tonumber(minetest.settings:get("aw_ui_panel_border_px")) or 16
+local PANEL_BORDER = 16
 
 -- Slot skin "middle" rect (PNG pixels). Tweak once to match your slot frame art.
-local SLOT_MID_X = tonumber(minetest.settings:get("aw_ui_slot_mid_x")) or 8
-local SLOT_MID_Y = tonumber(minetest.settings:get("aw_ui_slot_mid_y")) or 8
-local SLOT_MID_W = tonumber(minetest.settings:get("aw_ui_slot_mid_w")) or 25
-local SLOT_MID_H = tonumber(minetest.settings:get("aw_ui_slot_mid_h")) or 25
+local SLOT_MID_X = 4
+local SLOT_MID_Y = 4
+local SLOT_MID_W = 12
+local SLOT_MID_H = 12
 
 -- Draw solid color first, then optional 9-slice image (no fullscreen stretch)
 local function panel_bg(x, y, w, h, which, color_hex)
@@ -286,6 +286,31 @@ local function survival(player)
 end
 
 ------------------------------------------------------------------
+-- CAMPFIRE CONTEXT (4x1 smelting, fuel slot)
+------------------------------------------------------------------
+
+local function campfire(player)
+  local CTX_X, CTX_Y, CTX_W, CTX_H = 5, 0.38, 8.30, 7   -- X closer, W a touch wider
+  local cx, cy = CTX_X + 1.0, CTX_Y + 1.7
+  local ax, ay = cx + 1.2, cy + 0.90
+  local ox, oy = cx + 1, cy + 2
+
+  return table.concat({
+    panel_bg(CTX_X, CTX_Y, CTX_W, CTX_H, "right", "#777777DD"),
+
+    ("label[%.2f,%.2f;Cooking]"):format(CTX_X + 0.45, CTX_Y + 0.48),
+    ("style_type[list;size=%f,%f]"):format(SLOT_SIZE_CRAFT, SLOT_SIZE_CRAFT),
+    ("list[current_player;craft;%.2f,%.2f;4,1;0]"):format(cx, cy),
+    ("label[%.2f,%.2f;🔥]"):format(ax, ay),
+    ("list[current_player;craftpreview;%.2f,%.2f;1,1;0]"):format(ox, oy),
+
+    "listring[current_player;main]",
+    "listring[current_player;craft]",
+    "listring[current_player;main]",
+  })
+end
+
+------------------------------------------------------------------
 -- CREATIVE CONTEXT (text tabs, search top, 7x5)
 ------------------------------------------------------------------
 local function creative(player)
@@ -381,26 +406,28 @@ local function base()
   })
 end
 
-local function formspec(player)
-  local n   = player:get_player_name()
-  local inv = player:get_inventory()
-if inv:get_size("main") < 32 then inv:set_size("main", 32) end
+function aw_ui.formspec(player, ct)
+  	local n   = player:get_player_name()
+	local inv = player:get_inventory()
+	if inv:get_size("main") < 32 then inv:set_size("main", 32) end
 
-inv:set_size("craft", 4) -- 2×2 = 4
-inv:set_width("craft", 2) -- IMPORTANT for shaped 2×2 recipes
+	inv:set_size("craft", 4) -- 2×2 = 4
+	inv:set_width("craft", 2) -- IMPORTANT for shaped 2×2 recipes
 
-inv:set_size("craftpreview", 1)
+	inv:set_size("craftpreview", 1)
 
-  local fs = { base() }
-  if is_creative(n) then
-    fs[#fs+1] = creative(player)
-  else
-    fs[#fs+1] = survival(player)
-  end
-  return table.concat(fs)
+  	local fs = { base() }
+	if ct == "campfire" then
+		fs[#fs+1] = campfire(player)
+	elseif is_creative(n) then
+    	fs[#fs+1] = creative(player)
+  	else
+    	fs[#fs+1] = survival(player)
+  	end
+  	return table.concat(fs)
 end
 
-local function apply_formspec(p) p:set_inventory_formspec(formspec(p)) end
+local function apply_formspec(p) p:set_inventory_formspec(aw_ui.formspec(p)) end
 
 ------------------------------------------------------------------
 -- LIFECYCLE
@@ -418,7 +445,7 @@ end)
 
 minetest.register_chatcommand("awinv", { func = function(n)
   local p = minetest.get_player_by_name(n)
-  if p then minetest.show_formspec(n, "aw_ui", formspec(p)) end
+  if p then minetest.show_formspec(n, "aw_ui", aw_ui.formspec(p)) end
 end })
 
 ------------------------------------------------------------------
