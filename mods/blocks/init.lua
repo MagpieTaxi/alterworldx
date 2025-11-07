@@ -1,151 +1,20 @@
---water
-minetest.register_node("blocks:water_source", {
-    description = "Water",
-    drawtype = "liquid",
-    tiles = {"water.png"},
-	use_texture_alpha = "blend",
-    paramtype = "light",
-    walkable = false,
-	pointable = false,
-    buildable_to = true,
-    liquidtype = "source",
-    liquid_alternative_flowing = "blocks:water_flowing",
-    liquid_alternative_source = "blocks:water_source",
-    liquid_viscosity = 1,
-    post_effect_color = {a = 80, r = 30, g = 60, b = 255},
-    groups = {water = 3, liquid = 3},
-	sounds = AW.Audio.node_sound_water_defaults()
-})
-minetest.register_node("blocks:water_flowing", {
-    drawtype = "flowingliquid",
-    tiles = {"water.png"},
-    special_tiles = {
-        {name = "water.png", backface_culling = false},
-        {name = "water.png", backface_culling = true},
-    },
-	use_texture_alpha = "blend",
-    paramtype = "light",
-    paramtype2 = "flowingliquid",
-    walkable = false,
-	pointable = false,
-    buildable_to = true,
-    liquidtype = "flowing",
-    liquid_alternative_flowing = "blocks:water_flowing",
-    liquid_alternative_source = "blocks:water_source",
-    liquid_viscosity = 1,
-    post_effect_color = {a = 80, r = 30, g = 60, b = 255},
-    groups = {water = 3, liquid = 3, not_in_creative_inventory = 1},
-	sounds = AW.Audio.node_sound_water_defaults()
-})
+local path = core.get_modpath("blocks").."/definitions/"
 
---basic blocks
-core.register_node("blocks:dirt", {
-	description = "Dirt",
-	tiles = {"dirt.png"},
-	groups = {harvestable_shovel = 1},
-	digtime = 5,
-	sounds = AW.Audio.node_sound_dirt_defaults()
-})
-core.register_node("blocks:coarse_dirt",{
-	description = "Coarse Dirt",
-	tiles = {"coarse_dirt.png"},
-	groups = {harvestable_shovel = 1},
-	digtime = 5,
-	sounds = AW.Audio.node_sound_dirt_defaults(),
-	drop = {
-		max_items = 1,
-		items = {
-			{rarity = 10, items = {"blocks:dirt","blocks:pebble"}},
-			{items = {"blocks:coarse_dirt"}}
-		}
-	}
-})
-core.register_node("blocks:grass_block",{
-	description = "Grass Block",
-	tiles = {"grass_top.png","dirt.png","grass_side.png"},
-	groups = {harvestable_shovel = 1},
-	digtime = 6,
-	sounds = AW.Audio.node_sound_dirt_defaults()
-})
+dofile(path.."stations.lua")
 
-core.register_node("blocks:stone",{
-	description = "Stone",
-	tiles = {"stone.png"},
-	groups = {harvestable_pickaxe = 1},
-	sounds = AW.Audio.node_sound_stone_defaults()
-})
-core.register_node("blocks:sand", {
-	description = "Sand",
-	tiles = {"altersand.png"},
-	groups = {harvestable_shovel = 1},
-	digtime = 2,
-	sounds = AW.Audio.node_sound_sand_defaults()
-})
-core.register_node("blocks:gravel", {
-	description = "Gravel",
-	tiles = {"gravel.png"},
-	groups = {harvestable_shovel = 1},
-	digtime = 2,
-	sounds = AW.Audio.node_sound_gravel_defaults()
-})
-core.register_node("blocks:sycamore_log",{
-	description = "Sycamore Log",
-	tiles = {"sycamore_log_top.png","sycamore_log_top.png","sycamore_log.png"},
-	groups = {harvestable_axe = 1},
-	digtime = 10,
-	sounds = AW.Audio.node_sound_wood_defaults()
-})
+dofile(path.."liquid_water.lua")
 
-core.register_node("blocks:sycamore_leaves",{
-	description = "Sycamore Leaves",
-	tiles = {"sycamore_leaves.png"},
-	groups = {harvestable_cutters = 1, harvestable_hand = 2},
-	sounds = AW.Audio.node_sound_leaves_defaults()
-})
+dofile(path.."rock_dirt.lua")
+dofile(path.."rock_sand.lua")
+dofile(path.."rock_stone.lua")
 
-core.register_node("blocks:sycamore_branches",{
-	description = "Sycamore Branches",
-	tiles = {"sycamore_leaves_branched.png"},
-	groups = {harvestable_cutters = 1, harvestable_hand = 2},
-	sounds = AW.Audio.node_sound_leaves_defaults()
-})
+dofile(path.."wood_sycamore.lua")
 
----- Non-solid blocks
-core.register_node("blocks:grass",{
-	description = "Grass",
-	drawtype = "plantlike",
-	waving = 1,
-	tiles = {"tallgrass.png"},
-	digtime = 0.1,
+dofile(path.."metal_lignite.lua")
 
-	paramtype = "light",
-    sunlight_propagates = true,  -- allows light through
-    walkable = false,            -- no collision
-    buildable_to = true,         -- you can place something over it
-    floodable = true,            -- destroyed by water
+dofile(path.."crop_cotton.lua")
+dofile(path.."crop_rye.lua")
 
-	groups = {
-		harvestable_hand = 3,
-        flammable = 2,
-        attached_node = 1
-    },
-
-    selection_box = {
-        type = "fixed",
-        fixed = {-0.3, -0.5, -0.3, 0.3, 0.3, 0.3}
-    },
-
-	drop = {
-		max_items = 1,
-		items = {
-			{
-				rarity = 3,
-				items = {"items:plant_fiber"}
-			}
-		}
-	},
-	sounds = AW.Audio.node_sound_leaves_defaults()
-})
 core.register_node("blocks:rose",{
 		description = "Rose",
 	drawtype = "plantlike",
@@ -162,7 +31,8 @@ core.register_node("blocks:rose",{
 	groups = {
 		harvestable_hand = 3,
         flammable = 2,
-        attached_node = 1
+        attached_node = 1,
+		nature = 1
     },
 
     selection_box = {
@@ -209,7 +79,7 @@ core.register_node("blocks:stick",{
 	paramtype = "light",            -- For light propagation if needed
     sunlight_propagates = true,
 	paramtype2 = "facedir",
-    groups = {harvestable_hand = 2},
+    groups = {harvestable_hand = 2, misc = 1},
 	visual_offset = {x=0,y=-1,z=0},
     collision_box = {
 		type = "fixed",
@@ -251,7 +121,12 @@ core.register_node("blocks:lignite_block",{
 	sounds = AW.Audio.node_sound_stone_defaults()
 })
 
+-- =========================================================
 -- Campfire (blocks:campfire) with custom inventory UI
+-- - Permanent inventory = 3x5
+-- - 4 single-item input slots + 1 fuel slot
+-- - Keeps your mesh, light, drops, ABM, etc.
+-- =========================================================
 
 local S = function(s) return s end
 local FLAME_TEX = "campfire_flame.png"
@@ -402,3 +277,5 @@ core.register_abm({
     end
   end
 })
+
+dofile(path.."plants_sycamoreforest.lua")

@@ -9,6 +9,17 @@ core.register_biome({
 	heat_point = 50,
     humidity_point = 50,
 })
+core.register_biome({
+	name = "cotton_fields",
+	node_top = "blocks:grass_block",
+	depth_top = 1,
+	node_filler = "blocks:dirt",
+	depth_filler = 3,
+	y_max = 1000,
+	y_min = -2,
+	heat_point = 50,
+	humidity_point = 60
+})
 
 --ores
 minetest.register_ore({
@@ -51,10 +62,23 @@ core.register_decoration({ --tallgrass
 	place_on = {'blocks:grass_block'},
 	sidelen = 2,
 	fill_ratio = 0.1,
-    biomes = {"sycamore_forest"},
+    biomes = {"sycamore_forest","cotton_fields"},
     y_min = 1,
     y_max = 100,
     decoration = "blocks:grass",
+    param2 = 0,
+    param2_max = 3,
+})
+core.register_decoration({ --cotton
+	name = "cotton",
+	deco_type = "simple",
+	place_on = {'blocks:grass_block'},
+	sidelen = 2,
+	fill_ratio = 0.1,
+    biomes = {"cotton_fields"},
+    y_min = 1,
+    y_max = 100,
+    decoration = "blocks:cotton_plant",
     param2 = 0,
     param2_max = 3,
 })
@@ -64,7 +88,7 @@ core.register_decoration({ --roses
 	place_on = {'blocks:grass_block'},
 	sidelen = 12,
 	fill_ratio = 0.02,
-    biomes = {"sycamore_forest"},
+    biomes = {"sycamore_forest","cotton_fields"},
     y_min = 1,
     y_max = 100,
     decoration = "blocks:rose",
@@ -77,7 +101,7 @@ core.register_decoration({ --pebbles
 	place_on = {'blocks:grass_block'},
 	sidelen = 2,
 	fill_ratio = 0.02, 
-    biomes = {"sycamore_forest"},
+    biomes = {"sycamore_forest","cotton_fields"},
     y_min = 1,
     y_max = 100,
     decoration = "blocks:pebble",
